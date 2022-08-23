@@ -1,9 +1,6 @@
 pipeline {
-    agent {
-        node {
-            label 'docker' && 'maven'
-        }
-    }
+    agent { docker 'maven:3.8.1-adoptopenjdk-11' }
+	
     stages { 	
         stage('Build Jar') {
             steps {
