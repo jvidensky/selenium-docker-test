@@ -1,22 +1,11 @@
 pipeline {
-    agent none 
-    stages {
-        stage('Example Build') {
-            agent { docker 'maven:3.8.1-adoptopenjdk-11' } 
-            steps {
-                echo 'Hello, Maven'
-                sh 'mvn --version'
-            }
+    agent {
+        node {
+            label 'docker' && 'maven'
         }
-        stage('Example Test') {
-            agent { docker 'openjdk:8-jre' } 
-            steps {
-                echo 'Hello, JDK'
-                sh 'java -version'
-            }
-        }
-	
-	stage('Build Jar') {
+    }
+    stages { 	
+        stage('Build Jar') {
             steps {
                 sh 'mvn clean package -DskipTests'
             }
@@ -37,7 +26,6 @@ pipeline {
 			        }
                 }
             }
-        }    
-	 
+        }        
     }
 }
